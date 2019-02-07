@@ -1,27 +1,18 @@
-// if (workbox) {
-//     console.log(`Workbox is loaded`);
-//
-//     workbox.precaching.precache([
-//         '/img/icons/favicon-32x32.png',
-//     ]);
-//
-// }
-// else {
-//     console.log(`Workbox didn't load`);
-// }
-
 const CACHE_NAME = 'my-web-app-cache';
-const urlsToCache = [];
+const urlsToCache = [
+    '/index.html',
+    '/img/icons/favicon-32x32.png',
+    '/img/icons/favicon-16x16.png',
+];
 
 self.addEventListener('install', function(event) {
-    // event.waitUntil принимает промис для того, чтобы узнать,
-    // сколько времени займёт установка, и успешно
-    // или нет она завершилась.
     event.waitUntil(
     caches.open(CACHE_NAME)
-    .then(function(cache) {
-        console.log('Opened cache',);
+    .then(cache => {
         return cache.addAll(urlsToCache);
+    })
+    .then(() => {
+        return self.skipWaiting();
     })
     );
 });
@@ -49,9 +40,9 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-    // Этот метод анализирует запрос и
-    // ищет кэшированные результаты для этого запроса в любом из
-    // созданных сервис-воркером кэшей.
+// Этот метод анализирует запрос и
+// ищет кэшированные результаты для этого запроса в любом из
+// созданных сервис-воркером кэшей.
     caches.match(event.request)
     .then(function(response) {
         // если в кэше найдено то, что нужно, мы можем тут же вернуть ответ.
@@ -86,6 +77,7 @@ self.addEventListener('fetch', function(event) {
             .then(function(cache) {
                 // Добавляем ответ в кэш для последующего использования.
                 cache.put(event.request, responseToCache);
+                cache.addAll(urlsToCache);
             });
 
             return response;
@@ -94,3 +86,19 @@ self.addEventListener('fetch', function(event) {
     })
     );
 });
+
+// если надо поставить workbox service-worker
+// if (workbox) {
+//     console.log(`Workbox is loaded`);
+//
+//     workbox.precaching.precache([
+//         '/img/icons/favicon-32x32.png',
+//     ]);
+// self.__precacheManifest = [].concat(self.__precacheManifest || []);
+// workbox.precaching.suppressWarnings();
+// workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+//
+// }
+// else {
+//     console.log(`Workbox didn't load`);
+// }
