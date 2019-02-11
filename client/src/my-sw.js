@@ -3,6 +3,7 @@ const urlsToCache = [
     '/index.html',
     '/img/icons/favicon-32x32.png',
     '/img/icons/favicon-16x16.png',
+    'http://localhost:4000/api/all'
 ];
 
 self.addEventListener('install', function(event) {
@@ -45,6 +46,7 @@ self.addEventListener('fetch', function(event) {
 // созданных сервис-воркером кэшей.
     caches.match(event.request)
     .then(function(response) {
+        console.log(response);
         // если в кэше найдено то, что нужно, мы можем тут же вернуть ответ.
         if (response) {
             return response;
