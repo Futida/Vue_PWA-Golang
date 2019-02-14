@@ -10,18 +10,22 @@
                                @checked="todo.done"
                                :value="todo.done"
                                @change="updateTodo(todo)"
-                               title="Mark as done?"/>
+                        />
                     </span>
                     <input type="text"
                            class="form-control"
                            :class="todo.done ? 'todo__done' : ''"
                            v-model="todo.todo"
-                           @keypress="todo.editing = true" @keyup.enter="updateTodo(todo)">
-                    <span class="input-group-addon addon-left"
-                          title="Delete todo?"
-                          @click="deleteTodo(todo._id)">
-                    X
-                    </span>
+                           @keypress="todo.editing = true"
+                           @keyup.enter="updateTodo(todo)"
+                    />
+                    <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="deleteTodo(todo._id)"
+                    >
+                        Delete
+                    </button>
                 </div>
                 <span class="help-block small" v-show="todo.editing">Hit enter to update</span>
             </div>
@@ -73,7 +77,7 @@
             },
             listenToEvents() {
                 eventBus.$on('refreshTodo', ($event) => {
-                    this.fetchTodo(); // referesh or update todo list on the page
+                    this.fetchTodo(); // referesh or update todolist on the page
                 })
             }
         }

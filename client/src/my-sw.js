@@ -3,7 +3,7 @@ const urlsToCache = [
     '/index.html',
     '/img/icons/favicon-32x32.png',
     '/img/icons/favicon-16x16.png',
-    'http://localhost:4000/api/all'
+    // 'http://localhost:4000/api/all' - можно раскомментировать для форсу бандитского и посмотреть как кешируются данные
 ];
 
 self.addEventListener('install', function(event) {
@@ -20,7 +20,7 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
 
-    const cacheWhitelist = ['/index.html'];
+    const cacheWhitelist = [];
 
     event.waitUntil(
     // Получение всех ключей из кэша.
