@@ -32,7 +32,7 @@ router.route('/add').post(function(req, res) {
 router.route('/delete/:id').get(function(req, res, next) {
     const id = req.params.id;
 
-    todos.findByIdAndRemove(id, function(err, todo) {
+    todos.findByIdAndRemove(id, function(err) {
         if (err) {
             return next(new Error('Todo was not found'))
         }

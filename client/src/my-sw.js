@@ -46,7 +46,7 @@ self.addEventListener('fetch', function(event) {
 // созданных сервис-воркером кэшей.
     caches.match(event.request)
     .then(function(response) {
-        console.log(response);
+        // console.log(response);
         // если в кэше найдено то, что нужно, мы можем тут же вернуть ответ.
         if (response) {
             return response;
